@@ -20,41 +20,40 @@ for excel in excel_files:
     df[['lb','dipl']].to_csv(convex, index=False, sep='\t') 
     output = convex[:-9] + '_CLEANED.csv'
     subprocess.call(['python3', 'clean-skript_V3.py', convex, output])
-#extract cleaned 'dipl' column as string and list
+#extract cleaned 'dipl' column as string 
     cleaned = base_name + '_CLEANDIPL.csv' 
     col = pandas.read_csv(output, error_bad_lines=False, sep='\t') 
     cleaned_col = col[['dipl']].to_csv(cleaned, index = None, header=True)
-#bring edited 'clean' column back to origine
+#1)bring edited 'clean' column back to origine
     wb = openpyxl.load_workbook(excel)
-    sheet= wb.active
+    ws = wb.active
+    dipl_col_index = None
+    clean_col_index = None
 
-    cleanlist = pandas.read_csv(cleaned)
-    li = cleanlist.values.tolist()
-    print(type(li))
+    for e, col in enumerate(ws.iter_cols()):     
+        if col[0].value == 'clean':
+            clean_col_index = e+1
+    if clean_col_index is not None:
+        ws.delete_cols(clean_col_index)
+    for e, col in enumerate(ws.iter_cols()):
+        if col[0].value == 'dipl':
+            dipl_col_index = e+1
+    print('dipl_col_index=', dipl_col_index)
+    ws.insert_cols(dipl_col_index+1)
+    #find merged cells
+    for r in ws.merged_cells.ranges:
+        #find unmerged cells
+        ws.unmerge_cells(r)
+
     
     with open(cleaned) as f:
-        reader = csv.reader(f, delimiter= '\t')
-        for column in reader:
-            sheet['B1'] = li #need list not str)
-            #sheet.append(column)
-    wb.save(output[:-5] + '.xlsx') #hier setzte ich später base_name statt output[... ein
+        reader = csv.reader(f, delimiter=';')
+        for i, row in enumerate(reader):
+                for j, cell in enumerate(row): 
+                    ws.cell(row=i+1, column=dipl_col_index+1).value = 'ben'
+                    
 
- 
-   
-
-
-# next step: bring col to reader         
-# TODO: read csv file (output of clean script) line by line and set value for clean cell
-# TODO: how and when merge clean cells??? E.g. by using the empty lines
-
-#wb = openpyxl.load_workbook(excel)
-    #sheet= wb.active
-
-    #with open(output) as f:
-        #reader = csv.reader(f, delimiter= '\t')
-        #for row in reader:
-            #sheet.append(row)
-
+    wb.save('output.xlsx') #wb.save(basename + '.xlsx') 
     
    # wb.save(output[:-5] + '.xlsx') #hier setzte ich später base_name statt output[... ein
 
