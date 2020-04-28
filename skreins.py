@@ -64,7 +64,7 @@ for excel in excel_files:
 
     
 #bring edited 'clean' column back to origine
-    print("cleaned ", cleaned)
+    #print("cleaned ", cleaned)
     with open(cleaned) as f: 
         reader = csv.reader(f, delimiter=';')
         for i, row in enumerate(reader):
@@ -86,7 +86,7 @@ for excel in excel_files:
             merging = False
 
 
-    wb.save("FINAL.xlsx")
+    wb.save(excel)
 
 
  
