@@ -31,10 +31,9 @@ for excel in excel_files:
     col_rename = col.rename(columns={'dipl':'clean'}, index = None)
     cleaned_col = col_rename[['clean']].to_csv(cleaned, index = None, header=True)
     origclean = pandas.read_csv(cleaned, error_bad_lines=False, sep='\t')
-    zz = base_name + '_FINAL.xlsx'
-    ben = origclean.to_excel(zz, index = None)
-    uu = pandas.read_excel(zz)
-    print(uu)
+    finalclean = base_name + '_FINAL.xlsx'
+    cleaned_to_excel = origclean.to_excel(finalclean, index = None)
+    read_final_clean = pandas.read_excel(finalclean)
 #insert new 'clean' column (delete old one)
     wb = openpyxl.load_workbook(filename=excel, read_only=False)
     ws = wb.active
