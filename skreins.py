@@ -31,7 +31,7 @@ for excel in excel_files:
     col_rename = col.rename(columns={'dipl':'clean'}, index = None)
     cleaned_col = col_rename[['clean']].to_csv(cleaned, index = None, header=True)
     origclean = pandas.read_csv(cleaned, error_bad_lines=False, sep='\t')
-    finalclean = base_name + '_FINAL.xlsx'
+    finalclean = base_name + '_CLEANED.xlsx'
     cleaned_to_excel = origclean.to_excel(finalclean, index = None)
     read_final_clean = pandas.read_excel(finalclean)
 #insert new 'clean' column (delete old one)
