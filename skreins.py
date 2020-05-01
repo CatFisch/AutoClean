@@ -9,14 +9,20 @@ import openpyxl
 import csv
 from itertools import chain
 import clean_skript_V3
+import shutil
 
-#work in current dir
-excel_files = glob.glob(os.getcwd() + '/*.xlsx')
+#mkdir for output
+#os.mkdir("Collected_Output")
 
-#crate dir for output
-os.mkdir("Collected_Output")
+try:
+    os.makedirs('Collected_Output')
+except OSError as e:
+    if e.errno != errno.EEXIST:
+        raise
 
 #convert lb and clean column to .txt
+excel_files = glob.glob(os.getcwd() + '/*.xlsx')
+
 for excel in excel_files:
     base_name = excel.split('.')[0]
     convex = base_name + '_CONVED.txt'
@@ -53,8 +59,8 @@ for excel in excel_files:
 
 #need to save and reopen,
 #otherwise new inserted column won't be found when deleting merged cells
-    wb.save("TEMP.xlsx")   
-    wb = openpyxl.load_workbook(filename="TEMP.xlsx", read_only=False)
+    wb.save(base_name + "TEMP.xlsx")   
+    wb = openpyxl.load_workbook(filename= base_name + "TEMP.xlsx", read_only=False)
     ws = wb.active
     
 #find and unmerge merged cells
@@ -65,6 +71,7 @@ for excel in excel_files:
 
     
 #bring edited 'clean' column back to origine
+    #print("cleaned ", cleaned)
     with open(cleaned) as f: 
         reader = csv.reader(f, delimiter=';')
         for i, row in enumerate(reader):
@@ -85,8 +92,20 @@ for excel in excel_files:
             ws.merge_cells(start_row=last_value, start_column=dipl_col_index+1, end_row=cell.row-1, end_column=dipl_col_index+1)
             merging = False
 
-
     wb.save(excel)
+    
+#move output to "Collected_Output"
+    source = '/home/cat/Python/Test'
+    dest = '/home/cat/Python/Test/Collected_Output'
 
 
- 
+    files = os.listdir(source)
+
+    for f in files:
+        if (f.startswith("__pycache__") or
+            f.endswith(".csv") or
+            f.endswith(".txt") or
+            f.endswith("TEMP.xlsx") or
+            f.endswith("_CLEANED.xlsx")):
+            shutil.move(f, dest)
+    
