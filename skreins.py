@@ -8,30 +8,38 @@ import sys
 import openpyxl
 import csv
 from itertools import chain
-import clean_skript_V3
 import shutil
+import clean_skript_V3
+import argparse
 
-#mkdir for output
-#os.mkdir("Collected_Output")
-
-try:
-    os.makedirs('Collected_Output')
-except OSError as e:
-    if e.errno != errno.EEXIST:
-        raise
-
+                
 #convert lb and clean column to .txt
 excel_files = glob.glob(os.getcwd() + '/*.xlsx')
 
 for excel in excel_files:
-    base_name = excel.split('.')[0]
+    
+    if __name__ == '__main__':
+        parser = argparse.ArgumentParser()
+        parser.add_argument("--table")
+
+        args = parser.parse_args()
+
+        if args.table:
+            base_name = args.table
+            if os.path.exists(os.getcwd() + "/Collected_Output"):
+                os.remove(os.getcwd() + "/Collected_Output")
+            
+        else:
+            base_name = excel.split('.')[0]
+
     convex = base_name + '_CONVED.txt'
+    
 #apply clean-skript_V3.py
     df = pandas.read_excel(excel)
     df[['lb','dipl']].to_csv(convex, index=False, sep='\t') 
     output = base_name + '_CLEANED.csv'
-    #subprocess.call(['python3', 'clean-skript_V3.py', convex, output], shell=True
-    clean_skript_V3.main(["", convex, output])
+    clean_skript_V3.main(['', convex, output])
+    
 #rename cleaned 'dipl' column as string 
     cleaned = base_name + '_CLEANDIPLED.csv'
     col = pandas.read_csv(output, error_bad_lines=False, sep='\t')
@@ -41,6 +49,7 @@ for excel in excel_files:
     finalclean = base_name + '_CLEANED.xlsx'
     cleaned_to_excel = origclean.to_excel(finalclean, index = None)
     read_final_clean = pandas.read_excel(finalclean)
+    
 #insert new 'clean' column (delete old one)
     wb = openpyxl.load_workbook(filename=excel, read_only=False)
     ws = wb.active
@@ -57,10 +66,9 @@ for excel in excel_files:
             dipl_col_index = e+1
     ws.insert_cols(dipl_col_index+1)
 
-#need to save and reopen,
-#otherwise new inserted column won't be found when deleting merged cells
-    wb.save(base_name + "TEMP.xlsx")   
-    wb = openpyxl.load_workbook(filename= base_name + "TEMP.xlsx", read_only=False)
+#need to save and reopen (otherwise new inserted column won't be found when deleting merged cells)
+    wb.save(base_name + 'TEMP.xlsx')   
+    wb = openpyxl.load_workbook(filename= base_name + 'TEMP.xlsx', read_only=False)
     ws = wb.active
     
 #find and unmerge merged cells
@@ -69,9 +77,7 @@ for excel in excel_files:
         if(cr.min_col==dipl_col_index+1): 
             ws.unmerge_cells(range_string=str(cr))
 
-    
 #bring edited 'clean' column back to origine
-    #print("cleaned ", cleaned)
     with open(cleaned) as f: 
         reader = csv.reader(f, delimiter=';')
         for i, row in enumerate(reader):
@@ -82,24 +88,28 @@ for excel in excel_files:
     merging = False
     for row in ws.iter_rows(min_col=dipl_col_index+1, max_col=dipl_col_index+1): 
         cell = row[0]
-        #print("row ", row.index, "  value ", cell.value)
         if not cell.value:
             if not merging:
                 merging = True
                 last_value = cell.row-1
 
         elif merging:
-            ws.merge_cells(start_row=last_value, start_column=dipl_col_index+1, end_row=cell.row-1, end_column=dipl_col_index+1)
+            ws.merge_cells(start_row=last_value,
+                           start_column=dipl_col_index+1,
+                           end_row=cell.row-1,
+                           end_column=dipl_col_index+1)
             merging = False
 
     wb.save(excel)
     
-#move output to "Collected_Output"
-    source = '/home/cat/Python/Test'
-    dest = '/home/cat/Python/Test/Collected_Output'
-
-
-    files = os.listdir(source)
+#move output to 'Collected_Output'
+    try:
+        os.mkdir('Collected_Output')
+    except OSError:
+        pass
+    
+    dest = 'Collected_Output'
+    files = os.listdir(os.getcwd())
 
     for f in files:
         if (f.startswith("__pycache__") or
@@ -108,4 +118,6 @@ for excel in excel_files:
             f.endswith("TEMP.xlsx") or
             f.endswith("_CLEANED.xlsx")):
             shutil.move(f, dest)
-    
+
+
+  
