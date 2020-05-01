@@ -8,14 +8,15 @@ import sys
 import openpyxl
 import csv
 from itertools import chain
-#import xlsxwriter
-
 import clean_skript_V3
 
+#work in current dir
+excel_files = glob.glob(os.getcwd() + '/*.xlsx')
+
+#crate dir for output
+os.mkdir("Collected_Output")
 
 #convert lb and clean column to .txt
-excel_files = glob.glob(os.getcwd() + '/*.xlsx') 
-
 for excel in excel_files:
     base_name = excel.split('.')[0]
     convex = base_name + '_CONVED.txt'
