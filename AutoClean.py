@@ -101,23 +101,25 @@ def process_file(excel):
             f.endswith("TEMP.xlsx") or
             f.endswith("_CLEANED.xlsx")):
             shutil.move(os.path.join(os.getcwd(), f), os.path.join(dest, f))
-    print(base_name, " cleaned successfully")
+    #print final message
+    print(os.path.basename(base_name), "was cleaned successfully")    
 
-    
 #end function for optionality of input files
 parser = argparse.ArgumentParser()
-parser.add_argument("--table", nargs='+')
+parser.add_argument("--table", nargs='*')
 args = parser.parse_args()
 
-#list of files in folder
+#clean list of files in folder
 if args.table:
     for f in args.table:
         process_file(f)
-#all files in folder        
+#clean all files in folder        
 else:
     excel_files = glob.glob(os.getcwd() + '/*.xlsx')
+    
     for excel in excel_files:
         process_file(excel)
+
 
 
   
