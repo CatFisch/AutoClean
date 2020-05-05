@@ -12,28 +12,11 @@ import shutil
 import clean_skript_V3
 import argparse
 
-                
-#convert lb and clean column to .txt
-excel_files = glob.glob(os.getcwd() + '/*.xlsx')
-
-for excel in excel_files:
-    
-    if __name__ == '__main__':
-        parser = argparse.ArgumentParser()
-        parser.add_argument("--table")
-
-        args = parser.parse_args()
-
-        if args.table:
-            base_name = args.table
-            if os.path.exists(os.getcwd() + "/Collected_Output"):
-                os.remove(os.getcwd() + "/Collected_Output")
-            
-        else:
-            base_name = excel.split('.')[0]
-
+#convert .xlsx files in .txt  (start function for optionality of input files)          
+def process_file(excel):
+    base_name = excel.split('.')[0]
     convex = base_name + '_CONVED.txt'
-    
+
 #apply clean-skript_V3.py
     df = pandas.read_excel(excel)
     df[['lb','dipl']].to_csv(convex, index=False, sep='\t') 
@@ -117,7 +100,24 @@ for excel in excel_files:
             f.endswith(".txt") or
             f.endswith("TEMP.xlsx") or
             f.endswith("_CLEANED.xlsx")):
-            shutil.move(f, dest)
+            shutil.move(os.path.join(os.getcwd(), f), os.path.join(dest, f))
+    print(base_name, " cleaned successfully")
+
+    
+#end function for optionality of input files
+parser = argparse.ArgumentParser()
+parser.add_argument("--table", nargs='+')
+args = parser.parse_args()
+
+#list of files in folder
+if args.table:
+    for f in args.table:
+        process_file(f)
+#all files in folder        
+else:
+    excel_files = glob.glob(os.getcwd() + '/*.xlsx')
+    for excel in excel_files:
+        process_file(excel)
 
 
   
