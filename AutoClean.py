@@ -102,7 +102,7 @@ def process_file(excel):
             f.endswith("_CLEANED.xlsx")):
             shutil.move(os.path.join(os.getcwd(), f), os.path.join(dest, f))
     #print final message
-    print(os.path.basename(base_name), "was cleaned successfully")    
+    print(os.path.basename(base_name), "was cleaned successfully")
 
 #end function for optionality of input files
 parser = argparse.ArgumentParser()
@@ -120,6 +120,5 @@ else:
     for excel in excel_files:
         process_file(excel)
 
-
-
+print("\n selected files were cleand altogeter \n ฅ^•ﻌ•^ฅ")
   
