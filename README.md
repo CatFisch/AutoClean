@@ -19,7 +19,7 @@ limitations under the License.
 
 ##What does the AutoClean-Script do?
 
-The AutoClean-Script applies the "clean_skript_V3" (as a module) to excel files. 
+The AutoClean-Script applies the "clean_skript_V3" (as a module) to excel files. The AutoClean-Script does either create a new clean-column or overwrite the old one.
 
 
 ##Requirements for using the AutoCleansktipt
