@@ -35,7 +35,7 @@ def process_file(excel):
     
 #insert new 'clean' column (delete old one)
     wb = openpyxl.load_workbook(filename=excel, read_only=False)
-    ws = wb.active
+    ws = wb.worksheets[0]
     dipl_col_index = None
     clean_col_index = None
     
@@ -52,7 +52,7 @@ def process_file(excel):
 #need to save and reopen (otherwise new inserted column won't be found when deleting merged cells)
     wb.save(base_name + 'TEMP.xlsx')   
     wb = openpyxl.load_workbook(filename= base_name + 'TEMP.xlsx', read_only=False)
-    ws = wb.active
+    ws = wb.worksheets[0] 
     
 #find and unmerge merged cells
     merged_cells = list(ws.merged_cells.ranges)
@@ -120,5 +120,5 @@ else:
     for excel in excel_files:
         process_file(excel)
 
-print("\n selected files were cleand altogeter \n ฅ^•ﻌ•^ฅ")
+print("\n selected files are cleand altogeter \n ฅ^•ﻌ•^ฅ")
   
