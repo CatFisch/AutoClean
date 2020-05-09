@@ -1,4 +1,4 @@
-					# AutoCleanProject
+#AutoCleanProject
 
 
 ##Licence
@@ -19,14 +19,14 @@ limitations under the License.
 
 ##What does the AutoClean script do?
 
-The AutoClean script applies the clean_skript_V3 (as a module) to excel files. 
+The AutoClean-Script applies the "clean_skript_V3" (as a module) to excel files. 
 
 
 ##requirements for using the AutoCleansktipt
 
-1. The actual clean script has to be named / remaned to "clean_skript_V3" (for its called as module).
-2. The AutoClean script and actual clean script have to be in the same directory as the files on which the scripts should run.
-
+1. The actual Clean-Script has to be named / renamed to "clean_skript_V3" (for its called as module).
+2. The AutoClean-Script and actual Clean-Script have to be in the same directory as the files on which the scripts should run.
+S
 ##How to apply the AutoClean script
 
 #Clean all files in directory:
