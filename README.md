@@ -22,7 +22,7 @@ limitations under the License.
 The AutoClean-Script applies the "clean_skript_V3" (as a module) to excel files. 
 
 
-##requirements for using the AutoCleansktipt
+##Requirements for using the AutoCleansktipt
 
 1. The actual Clean-Script has to be named / renamed to "clean_skript_V3" (for its called as module).
 2. The AutoClean-Script and actual Clean-Script have to be in the same directory as the files on which the scripts should run.
@@ -35,7 +35,7 @@ The AutoClean-Script applies the "clean_skript_V3" (as a module) to excel files.
 dir/to/excel/files$ python AutoClean.py
 
 
-#clean a list of selected files (with the --table command)
+#Clean a list of selected files (with the --table command)
 
 dir/to/excel/files$ python AutoClean.py --table <some_excel_file.xlsx> <another_excel_file.xlsx> <third_file.xlsx> <...>
 
