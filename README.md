@@ -17,7 +17,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 
 
-##What does the AutoClean script do?
+##What does the AutoClean-Script do?
 
 The AutoClean-Script applies the "clean_skript_V3" (as a module) to excel files. 
 
