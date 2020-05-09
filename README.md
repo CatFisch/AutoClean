@@ -26,7 +26,8 @@ The AutoClean-Script applies the "clean_skript_V3" (as a module) to excel files.
 
 1. The actual Clean-Script has to be named / renamed to "clean_skript_V3" (for its called as module).
 2. The AutoClean-Script and actual Clean-Script have to be in the same directory as the files on which the scripts should run.
-S
+
+
 ##How to apply the AutoClean script
 
 #Clean all files in directory:
