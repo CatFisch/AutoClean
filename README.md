@@ -23,13 +23,13 @@ The AutoClean-Script applies the "clean_skript_V3" (as a module) to excel files.
 
 The "clean_skript_V3" can be found [here](https://www.linguistik.hu-berlin.de/en/institut-en/professuren-en/korpuslinguistik/research/ridges-projekt/download-files/v6/clean-skript_v3.py)
 
-## Requirements for using the AutoCleanScript
+## Requirements for using the AutoClean-Script
 
 1. The actual Clean-Script has to be named / renamed to "clean_skript_V3" (for its called as module).
 2. The AutoClean-Script and actual Clean-Script have to be in the same directory as the files on which the scripts should run.
 
 
-## How to apply the AutoClean script
+## How to apply the AutoClean-Script
 
 **Clean all files in directory:**
 
