@@ -21,7 +21,7 @@ limitations under the License.
 
 The AutoClean-Script applies the "clean_skript_V3" (as a module) to excel files. The AutoClean-Script does either create a new clean-column or overwrite the old one.
 
-The clean "clean_skript_V3" can be found [here](https://www.linguistik.hu-berlin.de/en/institut-en/professuren-en/korpuslinguistik/research/ridges-projekt/download-files/v6/clean-skript_v3.py)
+The "clean_skript_V3" can be found [here](https://www.linguistik.hu-berlin.de/en/institut-en/professuren-en/korpuslinguistik/research/ridges-projekt/download-files/v6/clean-skript_v3.py)
 
 ## Requirements for using the AutoCleansktipt
 
