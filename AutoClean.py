@@ -27,6 +27,7 @@ from itertools import chain
 import shutil
 import clean_skript_V3
 import argparse
+from copy import copy
 
 #convert .xlsx files in .txt  (start function for optionality of input files)          
 def process_file(excel):
@@ -64,6 +65,7 @@ def process_file(excel):
         if col[0].value == 'dipl':
             dipl_col_index = e+1
     ws.insert_cols(dipl_col_index+1)
+    ws.cell(row=1, column=dipl_col_index + 1).font = copy(ws.cell(row=1, column=dipl_col_index).font)
 
 #need to save and reopen (otherwise new inserted column won't be found when deleting merged cells)
     wb.save(base_name + 'TEMP.xlsx')   
@@ -76,7 +78,7 @@ def process_file(excel):
         if(cr.min_col==dipl_col_index+1): 
             ws.unmerge_cells(range_string=str(cr))
 
-#bring edited 'clean' column back to origine
+#bring edited 'clean' column back to origin
     with open(cleaned) as f: 
         reader = csv.reader(f, delimiter=';')
         for i, row in enumerate(reader):
